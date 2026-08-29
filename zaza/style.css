@@ -637,6 +637,43 @@ h2 em {
   font-size: 21px;
   line-height: 1.55;
 }
+.about-hobbies {
+  margin-top: 20px;
+}
+.hobbies-label {
+  margin: 0 0 12px;
+  color: var(--text);
+  font:
+    10px "DM Mono",
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.about-hobbies ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.about-hobbies li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.about-hobbies li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--violet-light);
+  box-shadow: 0 0 12px rgba(166, 122, 255, 0.7);
+}
 .text-link {
   display: inline-block;
   margin-top: 18px;
@@ -1125,10 +1162,10 @@ body.light-theme .social-link:focus-visible {
     padding-bottom: 95px;
   }
   .hero-copy {
-    order: 1;
+    order: 2;
   }
   .hero-visual {
-    order: 2;
+    order: 1;
   }
   .hero h1 {
     font-size: clamp(53px, 14vw, 73px);
@@ -1188,6 +1225,12 @@ body.light-theme .social-link:focus-visible {
   }
   .about-body .lead {
     font-size: 19px;
+  }
+  .about-hobbies {
+    margin-top: 18px;
+  }
+  .about-hobbies li {
+    font-size: 13px;
   }
   .skills-section {
     padding: 75px 0;
