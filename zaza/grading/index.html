@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grading System</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="icon" href="pictures/stro.png" type="image/x-icon" />
+  </head>
+  <style>
+    /* Overlay */
+    .login-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    /* Show when active */
+    .login-modal-overlay.active {
+      display: flex;
+    }
+
+    /* Modal Box */
+    .login-modal {
+      background: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    /* Header */
+    .login-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .login-title {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    /* Form Styling */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .password-group {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 35px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      background: #0077ff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #005fcc;
+    }
+
+    .register-prompt {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Overlay */
+    .register-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    /* Show when active */
+    .register-modal-overlay.active {
+      display: flex;
+    }
+
+    /* Modal Box */
+    .register-modal {
+      background: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    /* Header */
+    .register-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .register-title {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    /* Form Styling */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .password-group {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 35px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #218838;
+    }
+
+    .login-prompt {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    /*animation entrance*/
+    .fade-section {
+      opacity: 0;
+      transition: opacity 1.5s ease-out;
+    }
+
+    .fade-in {
+      opacity: 1;
+    }
+
+    .fade-reset {
+      opacity: 0;
+    }
+  </style>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <a
+            href="#"
+            style="cursor: pointer; text-decoration: none"
+            class="navbar-brand"
+          >
+            <img src="pictures/dcs.png" alt="Logo" class="logo" />
+            <h2 class="site-title">DCS Grading System</h2>
+          </a>
+        </div>
+
+        <div class="navbar-links">
+          <a href="#">Home</a>
+          <a href="#features">Features</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <div class="navbar-actions"></div>
+      </div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobile-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <i class="fas fa-graduation-cap sidebar-icon"></i>
+          <span class="sidebar-title">Grading System</span>
+        </div>
+      </div>
+      <div class="sidebar-links">
+        <a href="#">Home</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal-overlay" id="loginModal">
+      <div class="login-modal">
+        <div class="login-modal-content">
+          <div class="login-header">
+            <h3 class="login-title">Login</h3>
+            <button onclick="toggleLoginModal()" class="close-btn">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <form id="loginForm" action="login.php" method="POST">
+            <div class="form-group">
+              <label for="loginEmail">Email</label>
+              <input
+                type="email"
+                id="loginEmail"
+                name="email"
+                placeholder="Your email"
+                required
+              />
+            </div>
+
+            <div class="form-group password-group">
+              <label for="loginPassword">Password</label>
+              <input
+                type="password"
+                id="loginPassword"
+                name="password"
+                placeholder="Your password"
+                required
+              />
+              <button
+                type="button"
+                onclick="toggleLoginPassword()"
+                class="toggle-password"
+              >
+                <i id="loginPasswordToggleIcon" class="fas fa-eye"></i>
+              </button>
+            </div>
+
+            <div class="form-options">
+              <a href="forgot_password.php" class="forgot-link"
+                >Forgot password?</a
+              >
+            </div>
+
+            <button type="submit" class="submit-btn">Login</button>
+
+            <div class="register-prompt">
+              Don't have an account?
+              <button
+                type="button"
+                onclick="switchToRegister()"
+                class="register-btn1"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal-overlay" id="registerModal">
+      <div class="register-modal">
+        <div class="register-modal-content">
+          <div class="register-header">
+            <h3 class="register-title">Register</h3>
+            <button onclick="toggleRegisterModal()" class="close-btn">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <form id="registerForm" action="register.php" method="POST">
+            <div class="form-group">
+              <label for="registerName">Full Name</label>
+              <input
+                type="text"
+                id="registerName"
+                name="name"
+                placeholder="Your name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="registerEmail">Email</label>
+              <input
+                type="email"
+                id="registerEmail"
+                name="email"
+                placeholder="Your email"
+                required
+              />
+            </div>
+
+            <div class="form-group password-group">
+              <label for="registerPassword">Password</label>
+              <input
+                type="password"
+                id="registerPassword"
+                name="password"
+                placeholder="Create password"
+                required
+              />
+              <button
+                type="button"
+                onclick="toggleRegisterPassword()"
+                class="toggle-password"
+              >
+                <i id="registerPasswordToggleIcon" class="fas fa-eye"></i>
+              </button>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirm_password"
+                placeholder="Confirm password"
+                required
+              />
+            </div>
+
+            <button type="submit" class="submit-btn">Register</button>
+
+            <div class="login-prompt">
+              Already have an account?
+              <button
+                type="button"
+                onclick="switchToLogin()"
+                class="login-btn1"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- contents home -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-content fade-section">
+          <h1 class="hero-heading">
+            St. Rose Colleges Educational Foundation, Inc.
+          </h1>
+          <p class="hero-subtext">
+            Our Online Grading System ensures fast, accurate, and transparent
+            grade management giving students and teachers real-time access to
+            academic performance anytime, anywhere.
+          </p>
+          <div class="hero-buttons">
+            <button onclick="toggleRegisterModal()" class="register-btn">
+              Register Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+      <div class="features-container fade-section">
+        <h2 class="features-heading">Key Features</h2>
+        <p class="features-subtext">
+          Discover how our grading system can streamline academic evaluation and
+          empower both students and educators.
+        </p>
+
+        <div class="features-grid">
+          <!-- Feature 1 -->
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-user-check"></i>
+            </div>
+            <h3 class="feature-title">Secure Student Access</h3>
+            <p class="feature-description">
+              Students can view their grades anytime, anywhere ensuring
+              transparency and reducing the need for manual inquiries.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <h3 class="feature-title">Automated Calculations</h3>
+            <p class="feature-description">
+              Our system handles weighted averages, transmutations, and final
+              grade computations with precision and consistency.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="feature-title">Performance Insights</h3>
+            <p class="feature-description">
+              Track student progress, identify trends, and generate reports with
+              real-time analytics built into our grading dashboard.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-section">
+      <div class="how-container fade-section">
+        <h2 class="how-heading">How It Works</h2>
+        <p class="how-subtext">
+          Simple steps to manage and access academic grades with ease.
+        </p>
+
+        <div class="how-steps">
+          <!-- Step 1 -->
+          <div class="how-step">
+            <div class="step-circle">
+              <span class="step-number">1</span>
+            </div>
+            <h3 class="step-title">Create Account and Login</h3>
+            <p class="step-description">
+              Students and teachers sign in using their credentials to access
+              the grading dashboard.
+            </p>
+          </div>
+
+          <!-- Arrow -->
+          <div class="step-arrow">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="how-step">
+            <div class="step-circle">
+              <span class="step-number">2</span>
+            </div>
+            <h3 class="step-title">Input & Review Grades</h3>
+            <p class="step-description">
+              Teachers enter scores and assessments, while students can view and
+              track their academic performance.
+            </p>
+          </div>
+
+          <!-- Arrow -->
+          <div class="step-arrow">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="how-step">
+            <div class="step-circle">
+              <span class="step-number">3</span>
+            </div>
+            <h3 class="step-title">Generate Reports</h3>
+            <p class="step-description">
+              Grades are automatically calculated and organized into
+              downloadable summaries, ready for printing or sharing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <div class="about-container fade-section">
+        <div class="about-image">
+          <img src="pictures/stro.png" alt="About" class="about-img" />
+        </div>
+        <div class="about-content">
+          <h2 class="about-heading">About</h2>
+          <p class="about-text">
+            About Our Online-Based Grading System is a powerful digital platform
+            designed to streamline academic evaluation and grade management for
+            school.
+          </p>
+          <p class="about-text">
+            Our mission is to promote transparency, reduce manual errors, and
+            provide a seamless grading experience for both educators and
+            students anytime, anywhere.
+          </p>
+          <div class="about-features">
+            <div class="feature-box">
+              <i class="fas fa-shield-alt feature-icon"></i>
+              <p class="feature-label">Secure</p>
+            </div>
+            <div class="feature-box">
+              <i class="fas fa-bolt feature-icon"></i>
+              <p class="feature-label">Fast</p>
+            </div>
+            <div class="feature-box">
+              <i class="fas fa-heart feature-icon"></i>
+              <p class="feature-label">User-friendly</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <div class="contact-container fade-section">
+        <h2 class="contact-heading">Contact Us</h2>
+        <p class="contact-subtext">Have questions? Get in touch!</p>
+
+        <div class="contact-content">
+          <!-- Contact Form -->
+          <form id="contactForm" class="contact-form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Your email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="Your message"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+
+          <!-- Contact Info -->
+          <div class="contact-info">
+            <div class="info-box">
+              <h3>Contact Information</h3>
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                  <h4>Address</h4>
+                  <p>Samput<br />Paniqui<br />Tarlac</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-phone-alt"></i>
+                <div>
+                  <h4>Phone</h4>
+                  <p>09123456789</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                  <h4>Email</h4>
+                  <p>st.rose@gmail.com</p>
+                </div>
+              </div>
+              <div class="social-links">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                  <a href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                  <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>&copy; 2025 Dark System. All rights reserved.</footer>
+  </body>
+</html>
+<script>
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById("mobile-menu-button");
+  const sidebar = document.getElementById("mobile-sidebar");
+
+  if (mobileMenuBtn && sidebar) {
+    mobileMenuBtn.addEventListener("click", function () {
+      sidebar.classList.toggle("active");
+    });
+  }
+</script>
+
+<script>
+  //avtive login modal
+  function toggleLoginModal() {
+    const modal = document.getElementById("loginModal");
+    modal.classList.toggle("active");
+  }
+
+  // Optional: Show/hide password
+  function toggleLoginPassword() {
+    const passwordInput = document.getElementById("loginPassword");
+    const icon = document.getElementById("loginPasswordToggleIcon");
+
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      passwordInput.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  }
+
+  function toggleRegisterModal() {
+    const modal = document.getElementById("registerModal");
+    modal.classList.toggle("active");
+  }
+
+  function toggleRegisterPassword() {
+    const passwordInput = document.getElementById("registerPassword");
+    const icon = document.getElementById("registerPasswordToggleIcon");
+
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      passwordInput.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  }
+
+  // Switch from Register to Login
+  function switchToLogin() {
+    document.getElementById("registerModal").classList.remove("active");
+    document.getElementById("loginModal").classList.add("active");
+  }
+
+  // Switch from Login to Register
+  function switchToRegister() {
+    document.getElementById("loginModal").classList.remove("active");
+    document.getElementById("registerModal").classList.add("active");
+  }
+
+  const fadeSections = document.querySelectorAll(".fade-section");
+
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove("fade-reset"); // remove reset if present
+        void entry.target.offsetWidth; // force reflow to restart animation
+        entry.target.classList.add("fade-in");
+      } else {
+        entry.target.classList.remove("fade-in");
+        entry.target.classList.add("fade-reset"); // optional: reset class
+      }
+    });
+  });
+
+  fadeSections.forEach((section) => {
+    fadeObserver.observe(section);
+  });
+</script>

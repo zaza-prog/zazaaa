@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>titlee</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      /* Reset & Base */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: #1e2a38;
+        padding: 1rem 2rem;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 999;
+      }
+      .navbar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .logo {
+        height: 40px;
+      }
+      .site-title {
+        color: #fff;
+        font-size: 1.5rem;
+      }
+      .navbar-links a {
+        margin: 0 1rem;
+        color: #fff;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+      .navbar-links a:hover {
+        color: #00bcd4;
+      }
+      .menu-toggle {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Mobile Sidebar */
+      .mobile-sidebar {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%;
+        background-color: #1e2a38;
+        padding: 2rem;
+        z-index: 998;
+      }
+      .sidebar-header {
+        margin-bottom: 2rem;
+      }
+      .sidebar-title {
+        color: #fff;
+        font-size: 1.2rem;
+        margin-left: 0.5rem;
+      }
+      .sidebar-links a {
+        display: block;
+        margin: 1rem 0;
+        color: #fff;
+        font-weight: 500;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        padding: 8rem 2rem 4rem;
+        background: linear-gradient(to right, #019bb0, #2196f3);
+        color: #fff;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100vh;
+      }
+      .hero-content {
+        max-width: 1000px;
+      }
+      .hero-heading {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .hero-subtext {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+      }
+      .register-btn {
+        background-color: #fff;
+        color: #2196f3;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .register-btn:hover {
+        background-color: #e0f7fa;
+      }
+      .hero-image {
+        max-width: 300px;
+      }
+
+      /* Features Section */
+      .features-section {
+        padding: 4rem 2rem;
+        background-color: #fff;
+      }
+      .how-heading {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      .how-subtext {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #666;
+      }
+      .how-steps {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+      .how-step {
+        background-color: #f0f4f8;
+        padding: 1.5rem;
+        border-radius: 10px;
+        width: 250px;
+        text-align: center;
+      }
+      .step-circle {
+        background-color: #2196f3;
+        color: #fff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      /* About Section */
+      .about-section {
+        padding: 4rem 2rem;
+        background-color: #f5f7fa;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        align-items: center;
+        justify-content: center;
+      }
+      .about-img {
+        max-width: 300px;
+        border-radius: 10px;
+      }
+      .about-content {
+        max-width: 500px;
+      }
+      .about-heading {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .about-text {
+        margin-bottom: 1rem;
+        color: #555;
+      }
+      .about-features {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+      .feature-box {
+        text-align: center;
+      }
+      .feature-icon {
+        font-size: 1.5rem;
+        color: #2196f3;
+      }
+
+      /* Contact & Feedback */
+      .contact-section {
+        padding: 4rem 2rem;
+        background-color: #fff;
+      }
+      .contact-heading {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .contact-subtext {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #666;
+      }
+      .contact-info,
+      .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      .info-item i {
+        margin-right: 1rem;
+        color: #2196f3;
+      }
+      .social-icons a {
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        color: #2196f3;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .submit-btn {
+        background-color: #2196f3;
+        color: #fff;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #1e2a38;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .menu-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: block;
+      }
+
+      .icon {
+        font-size: 1.5rem;
+      }
+
+      /* Hide menu toggle on medium screens and up */
+      @media (min-width: 768px) {
+        .menu-toggle {
+          display: none;
+        }
+      }
+
+      /* Sidebar container */
+      .mobile-sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 16rem;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 50;
+        display: block;
+      }
+
+      /* Hide on medium screens and up */
+      @media (min-width: 768px) {
+        .mobile-sidebar {
+          display: none;
+        }
+      }
+
+      /* Header section */
+      .sidebar-header {
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .sidebar-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .sidebar-icon {
+        font-size: 1.5rem;
+        color: #146420;
+      }
+
+      .sidebar-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #0d7a1f;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero-section {
+          flex-direction: column;
+          text-align: center;
+        }
+        .hero-image-wrapper {
+          padding-left: 0;
+          margin-top: 2rem;
+        }
+        .how-steps {
+          flex-direction: column;
+          align-items: center;
+        }
+        .about-section {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar" style="z-index: 999">
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <a
+            href="#"
+            class="navbar-brand"
+            style="cursor: pointer; text-decoration: none"
+          >
+            <img src="pictures/stro.png" alt="Logo" class="logo" />
+            <h2 class="site-title">SRCEFI Grading System</h2>
+          </a>
+        </div>
+        <div class="navbar-links">
+          <a href="#">Home</a>
+          <a href="#features">How It Works</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a href="#feedback">FeedBack</a>
+        </div>
+        <div class="navbar-actions">
+          <button class="menu-toggle" id="mobile-menu-button">
+            <i style="color: white" class="fas fa-bars icon"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobile-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <i class="fas fa-graduation-cap sidebar-icon"></i>
+          <span class="sidebar-title">Grading System</span>
+        </div>
+      </div>
+      <div class="sidebar-links">
+        <a href="#">Home</a>
+        <a href="#features">How it works</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#feedback">FeedBack</a>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <div class="hero-content fade-section">
+          <h1 class="hero-heading">
+            St. Rose Colleges Educational Foundation, Inc.
+          </h1>
+          <p class="hero-subtext">
+            Our Online Grading System ensures fast, accurate, and transparent
+            grade management giving students and teachers real-time access to
+            academic performance.
+          </p>
+          <div class="hero-buttons">
+            <button onclick="toggleLoginModal()" class="register-btn">
+              Login Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="features" class="features-section">
+      <div class="how-container fade-section">
+        <h2 class="how-heading">How It Works</h2>
+        <p class="how-subtext">
+          Simple steps to manage and access academic grades with ease.
+        </p>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="step-circle"><span class="step-number">1</span></div>
+            <h3 class="step-title">Create Account and Login</h3>
+            <p class="step-description">
+              Students use their student id to sign in using their email to
+              access the grading dashboard.
+            </p>
+          </div>
+          <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="how-step">
+            <div class="step-circle"><span class="step-number">2</span></div>
+            <h3 class="step-title">Input & Review Grades</h3>
+            <p class="step-description">
+              Teachers enter scores and assessments, while students can view and
+              track their academic performance.
+            </p>
+          </div>
+          <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="how-step">
+            <div class="step-circle"><span class="step-number">3</span></div>
+            <h3 class="step-title">Generate Reports</h3>
+            <p class="step-description">
+              Grades are automatically calculated and organized into
+              downloadable summaries, ready for printing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <div class="about-container fade-section">
+        <div class="about-image">
+          <img src="pictures/stro.png" alt="About" class="about-img" />
+        </div>
+        <div class="about-content">
+          <h2 class="about-heading">About</h2>
+          <p class="about-text">
+            About Our Online-Based Grading System is a powerful digital platform
+            designed to streamline academic evaluation and grade management for
+            school.
+          </p>
+          <p class="about-text">
+            Our mission is to promote transparency, reduce manual errors, and
+            provide a seamless grading experience for both educators and
+            students anytime, anywhere.
+          </p>
+          <div class="about-features">
+            <div class="feature-box">
+              <i class="fas fa-shield-alt feature-icon"></i>
+              <p class="feature-label">Secure</p>
+            </div>
+            <div class="feature-box">
+              <i class="fas fa-bolt feature-icon"></i>
+              <p class="feature-label">Fast</p>
+            </div>
+            <div class="feature-box">
+              <i class="fas fa-heart feature-icon"></i>
+              <p class="feature-label">User-friendly</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <div class="contact-container fade-section">
+        <h2 class="contact-heading">Contact Us</h2>
+        <p class="contact-subtext">Have questions? Get in touch!</p>
+        <div class="contact-info">
+          <div class="info-box">
+            <h3>Contact Information</h3>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <h4>Address</h4>
+                <p>Samput<br />Paniqui<br />Tarlac</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-phone-alt"></i>
+              <div>
+                <h4>Phone</h4>
+                <p>09123456789</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <h4>Email</h4>
+                <p>st.rose@gmail.com</p>
+              </div>
+            </div>
+            <div class="social-links">
+              <h4>Follow Us</h4>
+              <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="contact-section">
+      <div class="contact-container fade-section">
+        <h2 class="contact-heading">FeedBack</h2>
+        <p class="contact-subtext">Have questions? Get in touch!</p>
+        <div class="contact-content">
+          <form id="contactForm" class="contact-form">
+            <div class="form-group">
+              <label for="name">Name (optional)</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email (optional)</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Your email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="Your message"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>&copy; 2025 Dark System. All rights reserved.</footer>
+  </body>
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById("mobile-menu-button");
+    const sidebar = document.getElementById("mobile-sidebar");
+
+    if (mobileMenuBtn && sidebar) {
+      mobileMenuBtn.addEventListener("click", function () {
+        sidebar.classList.toggle("active");
+      });
+    }
+  </script>
+</html>
